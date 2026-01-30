@@ -11,6 +11,8 @@ echo "PostgreSQL started!"
 
 # Применяем миграции при запуске сервера
 if [ "$1" = "python" ] && [ "$2" = "manage.py" ] && [ "$3" = "runserver" ]; then
+    echo "Make migrations..."
+    python manage.py makemigrations --noinput
     echo "Applying migrations..."
     python manage.py migrate --noinput
 fi
