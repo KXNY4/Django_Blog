@@ -18,12 +18,21 @@ class RegisterSerializer(serializers.ModelSerializer):
         
     def create(self, validated_data):
         validated_data.pop('password_confirm')
-        try:
-            user = User.objects.create_user(
-                email=validated_data['email'],
-                username=validated_data['username'],
-                password=validated_data['password']
-            )
-        except Exception as e:
-            raise CreateError(f"Ошибка при создании пользователя: {str(e)}")
+        user = User.objects.create_user(
+            email=validated_data['email'],
+            username=validated_data['username'],
+            password=validated_data['password']
+        )
         return user
+    
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'bio', 'avatar']
+        read_only_fields = ['id', 'email', 'username']
+
+class PublicUserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'bio', 'avatar', 'date_joined']
+        read_only_fields = ['id', 'username', 'bio', 'avatar', 'date_joined']

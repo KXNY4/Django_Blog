@@ -45,6 +45,7 @@ THIRD_PARTY = [
 APPS = [
     'apps.users',
     'apps.categories',
+    'apps.posts',
 ]
 
 
