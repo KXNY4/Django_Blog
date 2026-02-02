@@ -46,6 +46,7 @@ APPS = [
     'apps.users',
     'apps.categories',
     'apps.posts',
+    'apps.comments',
 ]
 
 

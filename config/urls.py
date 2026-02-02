@@ -25,6 +25,7 @@ urlpatterns = [
 urlpatterns += [
     path('api/', include('apps.users.api.urls')),
     path('api/posts/', include('apps.posts.api.urls')),
+    path('api/posts/<slug:slug>/', include('apps.comments.api.urls')),
 ]
 
 urlpatterns += [
