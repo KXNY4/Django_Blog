@@ -44,7 +44,6 @@ THIRD_PARTY = [
 
 APPS = [
     'apps.users',
-    'apps.categories',
     'apps.posts',
     'apps.comments',
 ]
@@ -149,6 +148,9 @@ REST_FRAMEWORK = {
         'anon': '30/minute',
         'user': '100/minute',
     },
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',

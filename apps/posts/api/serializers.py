@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from apps.categories.models import Category
-from apps.posts.models import Post, Tag
+from apps.posts.models import Post, Tag, Category
 
 
 User = get_user_model()
@@ -30,24 +29,32 @@ class PostListSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     category = CategorySerializer(read_only=True)
     tags = TagSerializer(many=True, read_only=True)
+    likes_count = serializers.SerializerMethodField()
     excerpt = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ['id', 'title', 'slug', 'excerpt', 'content', 'author', 'image', 'category', 'tags', 'created_at']
+        fields = ['id', 'title', 'slug', 'excerpt', 'content', 'author', 'image', 'category', 'tags', 'created_at', 'likes_count']
 
     def get_excerpt(self, obj):
         return obj.content[:200] + '...' if len(obj.content) > 200 else obj.content
+    
+    def get_likes_count(self, obj):
+        return obj.likes.count()
     
 
 class PostDetailSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     category = CategorySerializer(read_only=True)
     tags = TagSerializer(many=True, read_only=True)
-    
+    likes_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Post
-        fields = ['id', 'title', 'slug', 'content', 'author', 'image', 'category', 'tags', 'status', 'created_at', 'updated_at']
+        fields = ['id', 'title', 'slug', 'content', 'author', 'image', 'category', 'tags', 'status', 'created_at', 'updated_at', 'likes_count']
+    
+    def get_likes_count(self, obj):
+        return obj.likes.count()
 
 
 class PostCreateSerializer(serializers.ModelSerializer):
