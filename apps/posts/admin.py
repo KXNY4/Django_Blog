@@ -11,6 +11,12 @@ class PostAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
 
 
+@admin.register(PostLike)
+class PostLikeAdmin(admin.ModelAdmin):
+    list_display = ('user', 'post', 'created_at')
+    list_filter = ('created_at',)
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'created_at', 'updated_at')
